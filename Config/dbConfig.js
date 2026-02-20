@@ -2,7 +2,7 @@ const mongo=require('mongoose')
 
 const dbConnection=async()=>{
     try{
-        await mongo.connect('mongodb://localhost:27017/Manas')
+        await mongo.connect(process.env.MONGO_URL)
         console.log('Database connected Succesfully')
     }catch(err){
         console.log(err.message)
