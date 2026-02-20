@@ -1,0 +1,12 @@
+const app=require('./index')
+const dotenv=require('dotenv')
+const dbConnection=require('./Config/dbConfig')
+const {errorHandler}=require('./Constant/Constant')
+const Router=require('./Router/TodoRouter')
+dbConnection()
+dotenv.config()
+app.use('/todo',Router)
+app.use(errorHandler)
+app.listen(process.env.PORT,()=>{
+    console.log(`Server running on port ${process.env.PORT}`)
+})
