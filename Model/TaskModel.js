@@ -9,6 +9,10 @@ const task=new mongo.Schema({
     time:{
         type:String,
         required:[true,'Time require']
+    },
+    user:{
+        type:String,
+        required:true
     }
 },{
     timestamps:true

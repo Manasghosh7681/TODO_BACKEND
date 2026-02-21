@@ -67,11 +67,11 @@ const loginUser = async (req, res, next) => {
 
 const createTask = async (req, res, next) => {
     try {
-        const { task, time } = req.body
-        if (!task || !time) {
-            return errorResponse(res, 400, 'Please enter task and time')
+        const { task, time,user } = req.body
+        if (!task || !time ) {
+            return errorResponse(res, 400, 'Please enter  task and time')
         }
-        const newtask = await Task.create({ task, time })
+        const newtask = await Task.create({ task, time,user })
         if (newtask) {
             return Response(res, 201, 'New Task Added')
         }
@@ -84,7 +84,8 @@ const createTask = async (req, res, next) => {
 
 const showTask = async (req, res, next) => {
     try {
-        const result = await Task.find()
+        const {user}=req.body
+        const result = await Task.find({user:user})
         if (result) {
             const data = result.map((result) => {
                 return (
@@ -158,7 +159,7 @@ const verifyRefreshToken = (req, res, next) => {
             if (err) {
                 return errorResponse(res, 403, "Invalid refresh token");
             }
-            const newAccessToken = jwt.sign({ id: decoded.id }, process.env.SECRET_KEY, { expiresIn: "2m" })
+            const newAccessToken = jwt.sign({ id: decoded.id }, process.env.SECRET_KEY, { expiresIn: "15m" })
             return Response(res, 200, 'New Access token', {
                 accessToken: newAccessToken
             })
